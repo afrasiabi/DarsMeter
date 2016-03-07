@@ -27,6 +27,21 @@ body{
 :placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
   color:    #666;
 }
+
+.startBut{
+	visibility: hidden;
+	z-index: 1;
+	position: absolute;
+	top: 300px;
+	left: 650px;
+	width: 500px;
+	height: 150px;
+	border-radius: 20px;
+	background-color: #233539;
+	color: white;
+	font-size: 50px;
+	font-family: ComicSansMSBold;
+}
 .InpForm{
 	/*text-align: center;*/
 	height: 800px;
@@ -37,17 +52,6 @@ body{
 	background-color: #1E2D2C;
 	border-radius: 25px;
 }
-/*.choise{
-	background-color: transparent;
-	border: 0px;
-	border-bottom: 2px dotted #888;
-	height: 40px;
-	font-size: 20px;
-	color: #EEE;
-	padding-right: 10px;
-	padding-left: 10px;
-	transition: 400ms border-color;
-}*/
 .signIn{
 	text-align: center;
 	font-family: ComicSansMSBold;

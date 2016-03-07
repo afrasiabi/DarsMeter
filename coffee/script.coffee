@@ -2,6 +2,9 @@ signIn = document.getElementById "signIn"
 signUp = document.getElementById "signUp"
 signUpId = document.getElementById "signUpId"
 signInId = document.getElementById "signInId"
+InpForm = document.getElementById "InpFormId"
+startClk = document.getElementById "startClk"
+startedClk = document.getElementById "startedClk"
 
 signIn.addEventListener "click", (event) ->
 	signUpId.style.visibility = "hidden"
@@ -15,6 +18,15 @@ signUp.addEventListener "click", (event) ->
 	signIn.style.border = "none"
 	this.style.border = "solid"
 
+showStartPage = ->
+	InpForm.style.display = "none"
+	startClk.style.visibility = "visible"
+	startedClk.style.visibility = "hidden"
+
+startClk.addEventListener "click", (event) ->
+	startClk.style.visibility = "hidden"
+	startedClk.style.visibility = "visible"
+
 makeRequest = (url, data, cbFunc) ->
 	alertContents = ->
 		if httpRequest.readyState == XMLHttpRequest.DONE
@@ -25,7 +37,6 @@ makeRequest = (url, data, cbFunc) ->
 		return
 
 	httpRequest = new XMLHttpRequest
-
 	if !httpRequest
 		alert 'Giving up :( Cannot create an XMLHTTP instance'
 		return false
@@ -47,6 +58,7 @@ signInId.addEventListener "submit", (event) ->
 		pass: password.value
 	makeRequest "http://localhost:3000", signInData, (res) ->
 		console.log res
+		showStartPage()
 
 signUpId.addEventListener "submit", (event) ->
 	event.preventDefault()
@@ -61,4 +73,5 @@ signUpId.addEventListener "submit", (event) ->
 		passRep: passRepeat.value
 	makeRequest "http://localhost:3000", signUpData, (res) ->
 		console.log res
+		showStartPage()
 

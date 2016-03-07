@@ -5,12 +5,16 @@
 	<link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-	<div class="InpForm">
+	<div class="start">
+		<input class="startBut" id="startClk" value="START" type="button">
+		<input class="startBut" id="startedClk" value="STARTED" type="button">
+	</div>
+	<div class="InpForm" id="InpFormId">
 		<div class="choise">
 			<div class="signIn" id="signIn"> Sign In </div>
 			<div class="signUp" id="signUp"> Sign Up </div>
 		</div>
-		<form class="signInForm" id="signInId" action="" method="POST">
+		<form class="signInForm" id="signInId">
 			USERNAME <br> <input class="formInput" id="userInput" placeHolder="Username" name="user" type="text"><br>
 			PASSWORD <br><input class="formInput" id="password" placeHolder="Password" name="pass" type="password"><br><br>
 			<input class="subBut" id="signInButton" value="SIGN IN" type="submit">
