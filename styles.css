@@ -27,9 +27,10 @@ body{
 :placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
   color:    #666;
 }
-
+.start{
+	display: none;
+}
 .startBut{
-	visibility: hidden;
 	z-index: 1;
 	position: absolute;
 	top: 300px;
