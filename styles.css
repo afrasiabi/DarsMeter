@@ -43,6 +43,20 @@ body{
 	font-size: 50px;
 	font-family: ComicSansMSBold;
 }
+#showTime{
+	text-align: center;
+	z-index: 1;
+	position: absolute;
+	top: 500px;
+	left: 650px;
+	width: 500px;
+	height: 150px;
+	border-radius: 20px;
+	background-color: #7CB9C6;
+	color: black;
+	font-size: 50px;
+	font-family: ComicSansMSBold;
+}
 .InpForm{
 	/*text-align: center;*/
 	height: 800px;

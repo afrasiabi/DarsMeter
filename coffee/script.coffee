@@ -5,6 +5,7 @@ signInId = document.getElementById "signInId"
 InpForm = document.getElementById "InpFormId"
 startClk = document.getElementById "startClk"
 start = document.getElementById "Start"
+showTime = document.getElementById "showTime"
 
 class StopWatch
 	constructor: ->
@@ -79,7 +80,9 @@ startClk.addEventListener "click", (event) ->
 		stopWatch.start()
 		startClk.value = "Stop"
 		stopWatch.getValueEvery 1000, (timeSec) ->
-			console.log formatTime(stopWatch.getValue())
+			show = formatTime(stopWatch.getValue())
+			showTime.value = show
+
 
 
 makeRequest = (url, data, cbFunc) ->
