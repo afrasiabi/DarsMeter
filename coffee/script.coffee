@@ -72,16 +72,29 @@ formatTime = (timeSec) ->
 
 stopWatch = new StopWatch
 startClk.addEventListener "click", (event) ->
+	dt = new Date()
+	# situation =
+	# 	startTime: dt
+	# 	endTime: dt
+
 	if stopWatch.running
 		stopWatch.cancelGettingValue()
+		# utcDateEnd = dt.toUTCString()
 		startClk.value = "Start"
+		makeRequest "http://localhost:3000/setTime", {end:dt, duration:showTime.value}, (res) ->
+			console.log res
 
 	else
 		stopWatch.start()
+		# utcDateStart = dt.toUTCString()
 		startClk.value = "Stop"
 		stopWatch.getValueEvery 1000, (timeSec) ->
-			show = formatTime(stopWatch.getValue())
+			show = formatTime((stopWatch.getValue())/1000)
 			showTime.value = show
+		makeRequest "http://localhost:3000/setStartTime", {start:dt}, (res) ->
+			console.log res
+
+
 
 
 
@@ -114,7 +127,7 @@ signInId.addEventListener "submit", (event) ->
 	signInData =
 		user: username.value
 		pass: password.value
-	makeRequest "http://localhost:3000", signInData, (res) ->
+	makeRequest "http://localhost:3000/login", signInData, (res) ->
 		console.log res
 		showStartPage()
 
@@ -129,9 +142,11 @@ signUpId.addEventListener "submit", (event) ->
 		emailAddr: email.value
 		pass: password.value
 		passRep: passRepeat.value
-	makeRequest "http://localhost:3000", signUpData, (res) ->
+	makeRequest "http://localhost:3000/login", signUpData, (res) ->
 		console.log res
 		showStartPage()
+
+
 
 
 # class clsStopwatch
