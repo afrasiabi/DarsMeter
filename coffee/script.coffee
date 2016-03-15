@@ -72,26 +72,24 @@ formatTime = (timeSec) ->
 
 stopWatch = new StopWatch
 startClk.addEventListener "click", (event) ->
-	dt = new Date()
-	# situation =
-	# 	startTime: dt
-	# 	endTime: dt
+	# it will return timestamp
+	dt = Date.now()
 
 	if stopWatch.running
-		stopWatch.cancelGettingValue()
+		stopWatch.stop()
 		# utcDateEnd = dt.toUTCString()
 		startClk.value = "Start"
-		makeRequest "http://localhost:3000/setTime", {end:dt, duration:showTime.value}, (res) ->
+		makeRequest "http://localhost:3000/setTime", {type: "end", time: dt}, (res) ->
 			console.log res
 
 	else
 		stopWatch.start()
 		# utcDateStart = dt.toUTCString()
 		startClk.value = "Stop"
+		showTime.innerHTML = formatTime(0)	
 		stopWatch.getValueEvery 1000, (timeSec) ->
-			show = formatTime((stopWatch.getValue())/1000)
-			showTime.value = show
-		makeRequest "http://localhost:3000/setStartTime", {start:dt}, (res) ->
+			showTime.innerHTML = formatTime((stopWatch.getValue())/1000)
+		makeRequest "http://localhost:3000/setStartTime", {type: "start", time: dt}, (res) ->
 			console.log res
 
 
