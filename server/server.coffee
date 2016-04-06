@@ -1,6 +1,18 @@
 express = require "express"
 cors = require 'express-cors'
 
+MongoClient = require('mongodb').MongoClient
+ObjectID = require('mongodb').ObjectID
+url = 'mongodb://localhost:27017/darsMeter'
+
+MongoClient.connect url, (err, db) ->
+	if err?
+		console.log err
+		return
+	console.log("Connected correctly to mongo")
+	# db.collection('times').insert({startTime: Date.now()})
+	# db.collection('times').update({endTime: {$exists: false}}, {$set:{endTime: Date.now()}})
+
 port = 3000
 
 app = express()
