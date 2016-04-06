@@ -1,7 +1,7 @@
 {
-  "name": "p3",
+  "name": "dars-meter",
   "version": "1.0.0",
-  "description": "submitForm",
+  "description": "light server for darsMeter mobile web app.",
   "main": "server.coffee",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
