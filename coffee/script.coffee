@@ -135,6 +135,6 @@ signUpId.addEventListener "submit", (event) ->
 		emailAddr: email.value
 		pass: password.value
 		passRep: passRepeat.value
-	makeRequest "http://localhost:3000/login", signUpData, (res) ->
+	makeRequest "http://localhost:3000/register", signUpData, (res) ->
 		console.log res
 		showStartPage()

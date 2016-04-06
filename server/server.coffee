@@ -4,16 +4,30 @@ MongoClient = require('mongodb').MongoClient
 ObjectID = require('mongodb').ObjectID
 url = 'mongodb://localhost:27017/darsMeter'
 
+Authenticator = require './Authenticator'
+
 MongoClient.connect url, (err, db) ->
 	if err?
 		console.log err
 		return
+
 	console.log("Connected correctly to mongo")
+	
+	auth = new Authenticator db
+	auth.login "a@gmail.com", "aaa", (result) ->
+		console.log result
+	auth.logout 3019347850, (result) ->
+		console.log result
+
+	auth.getUserByToken 6746959207, (result) ->
+		console.log result
 
 	port = 3000
 
 	app = express()
 	app.use cors {allowedOrigins: ['localhost']}
+	app.get '/register', (req, res) ->
+		res.json req.query
 	app.get '/login', (req, res) ->
 		res.json req.query
 	app.get '/setTime' , (req, res) ->
