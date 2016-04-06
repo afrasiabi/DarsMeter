@@ -88,7 +88,7 @@ startClk.addEventListener "click", (event) ->
 		showTime.innerHTML = formatTime(0)	
 		stopWatch.getValueEvery 1000, (timeSec) ->
 			showTime.innerHTML = formatTime((stopWatch.getValue())/1000)
-		makeRequest "http://localhost:3000/setStartTime", {type: "start", time: dt}, (res) ->
+		makeRequest "http://localhost:3000/setTime", {type: "start", time: dt}, (res) ->
 			console.log res
 
 makeRequest = (url, data, cbFunc) ->
