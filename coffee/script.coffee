@@ -105,9 +105,12 @@ makeRequest = (url, data, cbFunc) ->
 		alert 'Giving up :( Cannot create an XMLHTTP instance'
 		return false
 	else	
+		if window.token?
+			data.token = window.token
 		qs = ""
 		for key, value of data
 			qs = qs + encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&"
+
 		httpRequest.onreadystatechange = alertContents
 		httpRequest.open("GET", url + "?" + qs)
 		httpRequest.send(data)
@@ -118,11 +121,13 @@ signInId.addEventListener "submit", (event) ->
 	username = document.getElementById "userInput"
 	password = document.getElementById "password"
 	signInData =
-		user: username.value
-		pass: password.value
+		email: username.value
+		password: password.value
 	makeRequest "http://localhost:3000/login", signInData, (res) ->
-		console.log res
-		showStartPage()
+		resObj = JSON.parse res
+		if resObj.success	
+			window.token = resObj.token
+			showStartPage()
 
 signUpId.addEventListener "submit", (event) ->
 	event.preventDefault()
