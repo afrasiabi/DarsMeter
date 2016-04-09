@@ -33,7 +33,7 @@ module.exports = class Authenticator
 		if fullName.length < 3
 			return "Fullname should be more than 3 chars"
 
-		# http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
+	# 	# http://stackoverflow.com/questions/46155/validate-email-address-in-javascript
 		emailRegex = /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 		if not emailRegex.test(email)
 			return "Email is not valid"
@@ -41,7 +41,7 @@ module.exports = class Authenticator
 		if pass isnt confirmPass
 			return "Passwords doesn't match"
 
-		# http://stackoverflow.com/questions/14850553/javascript-regex-for-password-containing-at-least-8-characters-1-number-1-uppe
+	# 	# http://stackoverflow.com/questions/14850553/javascript-regex-for-password-containing-at-least-8-characters-1-number-1-upper case
 		passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
 		if not passRegex.test(pass)
 			return "Password is not strong enough"
@@ -67,7 +67,7 @@ module.exports = class Authenticator
 					cb(loginResult)
 
 	getUserByToken: (token, cb) ->
-		@db.collection('session').find({token: token}).toArray().then (data) =>
+		@db.collection('session').find({token: parseInt(token)}).toArray().then (data) =>
 			if data.length is 1
 				userId = data.pop().userId
 				@getUserById userId, (data) ->

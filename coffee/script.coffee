@@ -12,10 +12,13 @@ class StopWatch
 		@running = no
 		@interval = null
 
-	start: ->
+	start: (optNow) ->
 		return if @running
 		@running = yes
-		@now = Date.now()
+		if optNow?
+			@now = optNow	
+		else
+			@now = Date.now()
 
 	stop: ->
 		return unless @running
@@ -70,6 +73,13 @@ formatTime = (timeSec) ->
 		seconds = "0" + seconds
 	time = hours + ':' + minutes + ':' + seconds
 
+startTimer = (optStartTime) ->
+	stopWatch.start(optStartTime)
+	startClk.value = "Stop"
+	showTime.innerHTML = formatTime(0)
+	stopWatch.getValueEvery 1000, (timeSec) ->
+		showTime.innerHTML = formatTime((stopWatch.getValue())/1000)
+
 stopWatch = new StopWatch
 startClk.addEventListener "click", (event) ->
 	# it will return timestamp
@@ -83,11 +93,7 @@ startClk.addEventListener "click", (event) ->
 			console.log res
 
 	else
-		stopWatch.start()
-		startClk.value = "Stop"
-		showTime.innerHTML = formatTime(0)	
-		stopWatch.getValueEvery 1000, (timeSec) ->
-			showTime.innerHTML = formatTime((stopWatch.getValue())/1000)
+		startTimer()
 		makeRequest "http://localhost:3000/setTime", {type: "start", time: dt}, (res) ->
 			console.log res
 
@@ -128,6 +134,10 @@ signInId.addEventListener "submit", (event) ->
 		if resObj.success	
 			window.token = resObj.token
 			showStartPage()
+			if resObj.startTime?
+				startTimer resObj.startTime
+		else
+			alert "Login not successful"
 
 signUpId.addEventListener "submit", (event) ->
 	event.preventDefault()
@@ -137,9 +147,13 @@ signUpId.addEventListener "submit", (event) ->
 	passRepeat = document.getElementById "regPassRep"
 	signUpData =
 		fullName: name.value
-		emailAddr: email.value
-		pass: password.value
-		passRep: passRepeat.value
+		email: email.value
+		password: password.value
+		confirmPassword: passRepeat.value
 	makeRequest "http://localhost:3000/register", signUpData, (res) ->
-		console.log res
-		showStartPage()
+		resObj = JSON.parse res
+		if resObj.success	
+			window.token = resObj.token
+			showStartPage()
+		else
+			alert resObj.msg

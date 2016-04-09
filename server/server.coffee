@@ -11,7 +11,6 @@ MongoClient.connect url, (err, db) ->
 	if err?
 		console.log err
 		return
-
 	console.log("Connected correctly to mongo")
 	
 	auth = new Authenticator db
@@ -34,15 +33,17 @@ MongoClient.connect url, (err, db) ->
 	app = express()
 	app.use cors {allowedOrigins: ['localhost']}
 	app.get '/register', (req, res) ->
-		res.json req.query
+		params = req.query
+		auth.register params.fullName, params.email, params.password, params.confirmPassword, (result) ->
+			res.json result
 	app.get '/login', (req, res) ->
 		params = req.query
 		auth.login params.email, params.password, (result) ->
+			result.startTime = 1460205592712
 			res.json result
 	app.get '/setTime' , (req, res) ->
 		params = req.query
 		if params.type is "start"
-			console.log "start", params.time
 			auth.getUserByToken params.token, (result) ->
 				user = result.user
 				db.collection('times').insert {startTime: params.time, userId: user._id}, (err, data) ->
@@ -52,12 +53,13 @@ MongoClient.connect url, (err, db) ->
 					res.json {success: true}
 
 		else if params.type is "stop"
-			console.log "stop", params.time
-			db.collection('times').update {endTime: {$exists: false}}, {$set:{endTime: params.time}}, (err, data) ->
-				if err?
-					res.json {success: false}
-					return
-				res.json {success: true}
+			auth.getUserByToken params.token, (result) ->
+				user = result.user
+				db.collection('times').update {userId: user._id, endTime: {$exists: false}}, {$set:{endTime: params.time}}, (err, data) ->
+					if err?
+						res.json {success: false}
+						return
+					res.json {success: true}
 
 	app.listen port, ->
 		console.log "server is ready on port #{port}"
